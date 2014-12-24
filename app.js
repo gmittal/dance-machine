@@ -2,6 +2,10 @@ var express = require('express');
 var app = express();
 var spotify = require('spotify-node-applescript');
 var request = require('request');
+var Cylon = require("cylon");
+
+// Initialize the robot
+
 
 // USED FOR TESTING PUPROSES
 app.get('/', function (req, res) {
@@ -76,6 +80,27 @@ function checkTrack() {
         console.log("TRACK CHANGED. RE-CHECK BPM.");
         trackID = state.track_id;
         bpm = getBPM();
+
+       var r = Cylon.robot({
+          // Change the port to the correct port for your Arduino.
+          connections: {
+            arduino: { adaptor: 'firmata', port: '/dev/tty.usbmodem1421' }
+          },
+
+          devices: {
+            led: { driver: 'led', pin: 13 }
+          },
+
+          work: function(my) {
+            every((30/bpm).second(), function() {
+              my.led.toggle();
+            });
+          }
+        });
+
+       // r.stop();
+       r.start();
+
         
       }
 
@@ -86,16 +111,13 @@ function checkTrack() {
     console.log("BPM: "+bpm);
   });
 
-// console.log(Math.round(60000/bpm));
-// clearInterval(beats);
-// beats = setInterval(beat, Math.round(600000/bpm));
-// var beats = setInterval(beat, Math.round(600000/bpm));
+
 }
 
 
 checkTrack();
 
-setInterval(checkTrack, 5000);
+setInterval(checkTrack, 7500);
 
 
 
@@ -109,12 +131,17 @@ beat();
 function beat() {
   setTimeout(function() {
     console.log("YO");
-    
+
     beat();
   }, 60000/bpm);
 
 
 }
+
+
+
+
+
 
 
 
