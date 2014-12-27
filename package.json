@@ -1,0 +1,19 @@
+{
+  "name": "Upbeat",
+  "version": "1.0.0",
+  "description": "Simple script that executes tasks at the speed of the current Spotify song.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gmittal/dance-machine.git"
+  },
+  "author": "Gautam Mittal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmittal/dance-machine/issues"
+  },
+  "homepage": "https://github.com/gmittal/dance-machine"
+}
