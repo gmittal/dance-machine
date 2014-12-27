@@ -12,6 +12,8 @@ Cylon.robot({
   },
 
   work: function(my) {
+    // console.log("YO");
+
     every((1).second(), function() {
       my.led.toggle();
     });
