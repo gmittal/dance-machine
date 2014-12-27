@@ -15,6 +15,12 @@ app.get('/', function (req, res) {
 	});
 });
 
+// ALLOWS EXTERNAL PROGRAMS TO ACCESS THE BPM
+app.get('/tempo', function (req, res) {
+  res.end(bpm.toString());
+});
+
+
 var server = app.listen(3000, function () {
 
   var host = server.address().address;
@@ -76,39 +82,44 @@ function checkTrack() {
     spotify.getState(function(err, state){
       console.log(state);
       
-      if (state.track_id != trackID) {
-        console.log("TRACK CHANGED. RE-CHECK BPM.");
-        trackID = state.track_id;
-        bpm = getBPM();
+      if (typeof state != 'undefined') {
 
-       var r = Cylon.robot({
-          // Change the port to the correct port for your Arduino.
-          connections: {
-            arduino: { adaptor: 'firmata', port: '/dev/tty.usbmodem1421' }
-          },
+              if (state.track_id != trackID) {
+                console.log("TRACK CHANGED. RE-CHECK BPM.");
+                trackID = state.track_id;
+                bpm = getBPM();
 
-          devices: {
-            led: { driver: 'led', pin: 13 }
-          },
+               // var r = Cylon.robot({
+               //    // Change the port to the correct port for your Arduino.
+               //    connections: {
+               //      arduino: { adaptor: 'firmata', port: '/dev/tty.usbmodem1421' }
+               //    },
 
-          work: function(my) {
-            every((30/bpm).second(), function() {
-              my.led.toggle();
-            });
-          }
-        });
+               //    devices: {
+               //      led: { driver: 'led', pin: 13 }
+               //    },
 
-       // r.stop();
-       r.start();
+               //    work: function(my) {
+               //      every((30/bpm).second(), function() {
+               //        my.led.toggle();
+               //      });
+               //    }
+               //  });
 
-        
+               // // r.stop();
+               // r.start();
+
+                
+              }
+
+              if (typeof bpm === 'undefined') {
+                bpm = getBPM();
+              }
+
+            console.log("BPM: "+bpm);
+
       }
 
-      if (typeof bpm === 'undefined') {
-        bpm = getBPM();
-      }
-
-    console.log("BPM: "+bpm);
   });
 
 
@@ -123,14 +134,11 @@ setInterval(checkTrack, 7500);
 
 
 
-// setInterval(beat, 60000/bpm);
-
-// clearInterval(beats);
 beat();
 
 function beat() {
   setTimeout(function() {
-    console.log("YO");
+    console.log("BEAT");
 
     beat();
   }, 60000/bpm);
