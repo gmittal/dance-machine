@@ -32,7 +32,7 @@ Cylon.robot({
             my.led.toggle();
 
             beat();
-          }, 30000/bpm);
+          }, 30100/bpm);
 
 
         }

@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/gmittal/dance-machine/issues"
   },
-  "homepage": "https://github.com/gmittal/dance-machine"
+  "homepage": "https://github.com/gmittal/dance-machine",
+  "dependencies": {
+    "cylon": "^0.21.2",
+    "express": "^4.10.6",
+    "request": "^2.51.0",
+    "spotify-node-applescript": "^0.2.1"
+  }
 }
