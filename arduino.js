@@ -1,10 +1,11 @@
 var Cylon = require("cylon");
+var request = require('request');
 
 // Initialize the robot
 Cylon.robot({
   // Change the port to the correct port for your Arduino.
   connections: {
-    arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
+    arduino: { adaptor: 'firmata', port: '/dev/tty.usbmodem1421' }
   },
 
   devices: {
@@ -12,10 +13,32 @@ Cylon.robot({
   },
 
   work: function(my) {
-    // console.log("YO");
+        var bpm;
 
-    every((1).second(), function() {
-      my.led.toggle();
-    });
+        beat();
+
+        function beat() {
+          
+
+          request('http://upbeat.ngrok.com/tempo', function (err, response, body) {
+
+                // console.log(body);
+                bpm = parseInt(body, 10);
+          });
+
+
+
+          setTimeout(function() {
+            my.led.toggle();
+
+            beat();
+          }, 30000/bpm);
+
+
+        }
+          
+
   }
 }).start();
+
+
