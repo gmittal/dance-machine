@@ -18,6 +18,7 @@
   "homepage": "https://github.com/gmittal/dance-machine",
   "dependencies": {
     "cylon": "^0.21.2",
+    "cylon-firmata": "^0.24.0",
     "express": "^4.10.6",
     "request": "^2.51.0",
     "spotify-node-applescript": "^0.2.1"
