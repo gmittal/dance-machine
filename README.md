@@ -12,7 +12,7 @@ Open Spotify and start playing a song, then start the webserver.
 ```
 $ node app.js
 ```
-Connect an Arduino via USB, then run:
+Connect an Arduino with an LED on pin 13 via USB, then run:
 ```
 $ node arduino.js
 ```
